@@ -38,7 +38,7 @@ POC Seeker script is written in Bash and relies on several (usually pre-installe
     ```
 
 - **searchsploit**
-  - **Installation**: `searchsploit` is part of the Exploit Database repository. It can be installed on Debian-based systems by installing the `exploitdb` package or via a direct clone from its GitHub repository. For a direct installation, you can use:
+  - **Installation**: `searchsploit` is part of the Exploit Database repository. It can be installed on Debian-based systems by installing the `exploitdb` package or via a direct clone from its GitHub repository. The script will also attempt to install it automatically if missing. For a manual installation, you can use:
     ```bash
     sudo git clone https://gitlab.com/exploit-database/exploitdb.git /opt/exploitdb
     sudo ln -sf /opt/exploitdb/searchsploit /usr/local/bin/searchsploit

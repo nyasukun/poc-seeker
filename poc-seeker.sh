@@ -161,6 +161,31 @@ function check_curl_features()
   fi
 }
 
+function ensure_exploitdb_installed()
+{
+  if ! command -v searchsploit >/dev/null; then
+    yellow "searchsploit not found, attempting to install exploitdb ...\n"
+    if command -v apt-get >/dev/null; then
+      sudo apt-get update && sudo apt-get install -y exploitdb
+    elif command -v dnf >/dev/null; then
+      sudo dnf install -y exploitdb
+    elif command -v yum >/dev/null; then
+      sudo yum install -y exploitdb
+    elif command -v pacman >/dev/null; then
+      sudo pacman -Sy --noconfirm exploitdb
+    else
+      red "Failed to find a supported package manager. Please install exploitdb manually.\n"
+      exit 1
+    fi
+    if ! command -v searchsploit >/dev/null; then
+      red "Automatic installation failed. Please install exploitdb manually.\n"
+      exit 1
+    else
+      green "exploitdb installed successfully.\n"
+    fi
+  fi
+}
+
 function check_for_update()
 {
   SCRIPT_RAW_URL="https://raw.githubusercontent.com/0xyassine/poc-seeker/master/poc-seeker.sh"
@@ -526,6 +551,7 @@ function nvd_collect_information()
 logo
 verify_packages
 check_curl_features
+ensure_exploitdb_installed
 
 #IS THE TOOL EXECUTED WITHOUT ANY ARGUEMTNS?
 if [[ $# -eq 0 ]];then
